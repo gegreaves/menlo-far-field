@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from plotting.plot import plot_waveform
+from plotting.plot import plot_spectrum
 
 class THzWaveform:
     def __init__(self, data):
@@ -32,6 +34,9 @@ class THzWaveform:
         
         return THzSpectrum(spectrum_data)
 
+    def plot(self, ax=None, time_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+        return plot_waveform(self, ax=ax, time_range=time_range, style_path=style_path, **kwargs)
+
 
 class THzSpectrum:
     def __init__(self, data):
@@ -57,4 +62,7 @@ class THzSpectrum:
             "Spectrum (a.u.)": self.data["Spectrum (a.u.)"] / reference.data["Spectrum (a.u.)"]
         })
         return THzSpectrum(normalised_data)
+
+    def plot(self, ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+        return plot_spectrum(self, ax=ax, freq_range=freq_range, style_path=style_path, **kwargs)
 

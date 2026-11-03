@@ -1,0 +1,32 @@
+# Figure
+figure.figsize: 6, 4
+figure.dpi: 120
+
+# Font
+font.size: 10
+axes.labelsize: 10
+axes.titlesize: 11
+legend.fontsize: 9
+
+# Lines
+lines.linewidth: 1.5
+
+# Axes
+axes.linewidth: 1.0
+axes.grid: False
+
+# Ticks
+xtick.direction: in
+ytick.direction: in
+xtick.top: True
+ytick.right: True
+
+xtick.major.size: 3
+ytick.major.size: 3
+
+# Legend
+legend.frameon: False
+
+# Saving
+savefig.dpi: 300
+savefig.bbox: tight
