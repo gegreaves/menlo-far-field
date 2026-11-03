@@ -2,15 +2,18 @@ import pandas as pd
 import numpy as np
 from plotting.plot import plot_waveform
 from plotting.plot import plot_spectrum
+from src import read_data
 
 class THzWaveform:
-    def __init__(self, data):
+    def __init__(self, data, metadata=None):
         self.data = data
+        self.metadata = metadata
 
     @classmethod
     def from_file(cls, file_path):
         data = pd.read_csv(file_path, skiprows=7, delimiter="\t", names=["Time (ps)", "Amplitude (a.u.)"])
-        return cls(data)
+        metadata = read_data.read_header(file_path)
+        return cls(data,metadata)
 
     def fft(self):
         # Perform FFT on the waveform data
@@ -39,14 +42,16 @@ class THzWaveform:
 
 
 class THzSpectrum:
-    def __init__(self, data):
+    def __init__(self, data, metadata=None):
         self.data = data
+        self.metadata = metadata
 
     @classmethod
     def from_file(cls, file_path):
         data = pd.read_csv(file_path, delimiter="\t", skiprows=7, names=["Frequency (THz)", "Spectrum (a.u.)"])
         data['Spectrum (a.u.)'] = 10**(data['Spectrum (a.u.)']/20) # This is 20, not 10, because the software uses the power convention for db.
-        return cls(data)
+        metadata = read_data.read_header(file_path)
+        return cls(data, metadata)
 
     @property
     def amplitude_db(self):
