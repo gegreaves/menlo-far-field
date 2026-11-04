@@ -3,7 +3,7 @@ import numpy as np
 from plotting.plot import plot_waveform
 from plotting.plot import plot_spectrum
 from plotting.plot import plot_optical_properties
-from src import read_data
+import read_data
 
 class THzWaveform:
     def __init__(self, data, metadata=None):
