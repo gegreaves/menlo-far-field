@@ -43,7 +43,7 @@ class THzWaveform:
         
         return THzSpectrum(spectrum_data)
 
-    def plot(self, ax=None, time_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+    def plot(self, ax=None, time_range=None, style_path="src/plotting/styles/thz.mplstyle", **kwargs):
         return plot_waveform(self, ax=ax, time_range=time_range, style_path=style_path, **kwargs)
 
 
@@ -86,7 +86,7 @@ class THzSpectrum:
         })
         return THzSpectrum(normalised_data)
 
-    def plot(self, ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+    def plot(self, ax=None, freq_range=None, style_path="src/plotting/styles/thz.mplstyle", **kwargs):
         return plot_spectrum(self, ax=ax, freq_range=freq_range, style_path=style_path, **kwargs)
 
 
@@ -99,5 +99,5 @@ class OpticalProperties:
         self.permittivity = permittivity
         self.conductivity = None
 
-    def plot(self, property = "refractive_index", ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+    def plot(self, property = "refractive_index", ax=None, freq_range=None, style_path="src/plotting/styles/thz.mplstyle", **kwargs):
         return plot_optical_properties(self, property=property, ax=ax, freq_range=freq_range, style_path=style_path, **kwargs)

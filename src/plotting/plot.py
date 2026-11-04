@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_spectrum(THzSpectrum, ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", fit_range = None, **kwargs):
+def plot_spectrum(THzSpectrum, ax=None, freq_range=None, style_path="src/plotting/styles/thz.mplstyle", fit_range = None, **kwargs):
     with plt.style.context(style_path):
         if ax is None:
             fig,(ax_amp,ax_phase) = plt.subplots(2,1, sharex=True)
@@ -22,7 +22,7 @@ def plot_spectrum(THzSpectrum, ax=None, freq_range=None, style_path="plotting/st
         )
     return(fig,(ax_amp,ax_phase))
 
-def plot_waveform(THzWaveform, ax=None, time_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+def plot_waveform(THzWaveform, ax=None, time_range=None, style_path="src/plotting/styles/thz.mplstyle", **kwargs):
     with plt.style.context(style_path):
         if ax is None:
             fig,ax = plt.subplots()
@@ -53,7 +53,7 @@ PROPERTY_LABELS = {
                 'complex': True}
     }
 
-def plot_optical_properties(OpticalProperties, property = "refractive_index", ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+def plot_optical_properties(OpticalProperties, property = "refractive_index", ax=None, freq_range=None, style_path="src/plotting/styles/thz.mplstyle", **kwargs):
     with plt.style.context(style_path):
         if ax is None:
             fig,ax = plt.subplots()
