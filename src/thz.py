@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from plotting.plot import plot_waveform
 from plotting.plot import plot_spectrum
+from plotting.plot import plot_optical_properties
 from src import read_data
 
 class THzWaveform:
@@ -17,6 +18,11 @@ class THzWaveform:
 
     def fft(self):
         # Perform FFT on the waveform data
+        # Fourier convention:
+        # E(w) = integral E(t) exp(-i*w*t) dt
+        #
+        # Therefore, a positive time delay tau produces:
+        # E_delayed(w) = E(w) exp(-i*w*tau) (i.e. a negative phase shift)
         time = self.data["Time (ps)"].values
         amplitude = self.data["Amplitude (a.u.)"].values
         n = len(time)
@@ -60,6 +66,18 @@ class THzSpectrum:
     @property
     def unwrapped_phase(self):
         return np.unwrap(np.angle(self.data['Spectrum (a.u.)']))
+
+    def corrected_phase(self, fit_range):
+        # Fit a linear function to the unwrapped phase in the specified frequency range
+        freq = self.data["Frequency (THz)"].values
+        phase = self.unwrapped_phase
+        mask = (freq >= fit_range[0]) & (freq <= fit_range[1])
+        coeffs = np.polyfit(freq[mask], phase[mask], 1)
+        linear_fit = np.polyval(coeffs, freq)
+
+        # Subtract the linear fit from the unwrapped phase to correct it
+        corrected_phase = phase - coeffs[1] # Subtract the intercept to correct the phase
+        return corrected_phase
     
     def normalise(self,reference: "THzSpectrum"):
         normalised_data = pd.DataFrame({
@@ -71,3 +89,15 @@ class THzSpectrum:
     def plot(self, ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
         return plot_spectrum(self, ax=ax, freq_range=freq_range, style_path=style_path, **kwargs)
 
+
+class OpticalProperties:
+    def __init__(self, frequency = None, refractive_index=None, extinction_coefficient=None, absorption_coefficient=None, permittivity=None):
+        self.frequency = frequency
+        self.refractive_index = refractive_index
+        self.extinction_coefficient = extinction_coefficient
+        self.absorption_coefficient = absorption_coefficient
+        self.permittivity = permittivity
+        self.conductivity = None
+
+    def plot(self, property = "refractive_index", ax=None, freq_range=None, style_path="plotting/styles/thz.mplstyle", **kwargs):
+        return plot_optical_properties(self, property=property, ax=ax, freq_range=freq_range, style_path=style_path, **kwargs)
