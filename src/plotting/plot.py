@@ -68,7 +68,7 @@ def plot_optical_properties(OpticalProperties, property = "refractive_index", ax
         ax.plot(OpticalProperties.frequency, np.imag(getattr(OpticalProperties, property)), label=f"{label} - Imaginary", **kwargs)
         ax.legend()
     else:
-        ax.plot(OpticalProperties.frequency, getattr(OpticalProperties, property), **kwargs)
+        ax.plot(OpticalProperties.frequency, getattr(OpticalProperties, property), label=f"{label}", **kwargs)
     labels = PROPERTY_LABELS[property]
     ax.set(
     xlabel = "Frequency (THz)", ylabel=labels['ylabel'], title=labels['title'], xlim=freq_range
