@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_spectrum(THzSpectrum, ax=None, freq_range=None, fit_range = None, **kwargs):
+def plot_spectrum(THzSpectrum, ax=None, freq_range=None, fit_range = None, normalise=False, **kwargs):
     
     if ax is None:
         fig,(ax_amp,ax_phase) = plt.subplots(2,1, sharex=True)
@@ -9,7 +9,10 @@ def plot_spectrum(THzSpectrum, ax=None, freq_range=None, fit_range = None, **kwa
         fig = ax[0].figure
         ax_amp = ax[0]
         ax_phase = ax[1]
-    ax_amp.plot(THzSpectrum.data["Frequency (THz)"], np.abs(THzSpectrum.data["Spectrum (a.u.)"]), **kwargs)
+    amplitude = np.abs(THzSpectrum.data["Spectrum (a.u.)"])
+    if normalise:
+        amplitude /= np.max(amplitude)
+    ax_amp.plot(THzSpectrum.data["Frequency (THz)"], amplitude, **kwargs)
     ax_amp.set(
     ylabel="Amplitude (a.u.)", title="THz Spectrum", xlim=freq_range
     )
