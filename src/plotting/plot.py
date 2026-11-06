@@ -58,14 +58,14 @@ PROPERTY_LABELS = {
 
 
 def plot_optical_properties(OpticalProperties, property = "refractive_index", ax=None, freq_range=None, **kwargs):
-    
+    label = kwargs.pop("label", "") # take label out of kwargs so it doesn't get passed to ax.plot() twice
     if ax is None:
         fig,ax = plt.subplots()
     else:
         fig = ax.figure
     if PROPERTY_LABELS[property]['complex']:
-        ax.plot(OpticalProperties.frequency, np.real(getattr(OpticalProperties, property)), label='Real', **kwargs)
-        ax.plot(OpticalProperties.frequency, np.imag(getattr(OpticalProperties, property)), label='Imaginary', **kwargs)
+        ax.plot(OpticalProperties.frequency, np.real(getattr(OpticalProperties, property)), label=f"{label} - Real", **kwargs)
+        ax.plot(OpticalProperties.frequency, np.imag(getattr(OpticalProperties, property)), label=f"{label} - Imaginary", **kwargs)
         ax.legend()
     else:
         ax.plot(OpticalProperties.frequency, getattr(OpticalProperties, property), **kwargs)
