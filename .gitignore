@@ -2,3 +2,4 @@
 testing.ipynb
 __pycache__/
 *.pyc
+*.egg-info/
