@@ -1,5 +1,5 @@
 import numpy as np
-from src.thz import OpticalProperties
+from thz import OpticalProperties
 
 def extract_properties(THzSpectrum, thickness, fit_range=None):
     # Extract properties from the THz spectrum
